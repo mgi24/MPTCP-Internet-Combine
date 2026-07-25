@@ -52,6 +52,30 @@ Run:
 sudo bash serverapply/lan_creator.sh
 ```
 
+**Web Config Panel (Client)**
+
+A browser-based configuration panel is available on the client machine. It runs on **port 80** and is managed by systemd (`python.mptcp.service`).
+
+- View MPTCP status, interfaces, traffic stats, and active connections
+- Configure sing-box Shadowsocks settings, output interfaces, and iptables rules
+- Start/stop services (sing-box, socat, keepalive, python panel)
+
+Access via browser: `http://<client_ip>/`
+
+The panel is auto-started on boot via systemd.
+
+**Systemd Services (Client)**
+
+| Service | Unit | Description |
+|---|---|---|
+| MPTCP daemon | `mptcp.service` | Multipath TCP kernel daemon |
+| Web config panel | `python.mptcp.service` | Python web UI (port 80) |
+| sing-box | `sing-box.service` | Shadowsocks proxy |
+| socat bridge | `socat-bridge.service` | Port forwarding to socat |
+| TCP keepalive | `tcp-keepalive.service` | Keepalive tuning |
+
+All client services are enabled on boot by default after running `clientinstall.sh`.
+
 **Start and Stop**
 
 ```bash
